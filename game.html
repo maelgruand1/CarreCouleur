@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carre couleur | Game</title>
+    <link rel="stylesheet" href="game.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="LogoCarreCouleur.png" />
+  </head>
+  <body>
+    <h1>Carre couleur</h1>
+    <div id="game-settings">
+      <button id="two-players">Jouer à deux</button>
+      <button id="vs-computer">Jouer contre l'ordinateur</button>
+    </div>
+    <div id="difficulty-settings" class="hidden">
+      <p>Choisissez le niveau de difficulté :</p>
+      <button id="easy-mode">Facile</button>
+      <button id="hard-mode">Difficile</button>
+    </div>
+
+    <div id="game-board" class="hidden"></div>
+    <p id="status"></p>
+    <script src="game.js"></script>
+  </body>
+</html>
