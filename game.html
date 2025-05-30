@@ -72,43 +72,7 @@
                 font-size: 1.2rem;
             }
         }
-        .message-box {
-            position: fixed; /* Changed from absolute to fixed for viewport positioning */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Center the box initially */
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            cursor: grab; /* Indicate it's draggable */
-            user-select: none; /* Prevent text selection during drag */
-            /* Added min-width/height to ensure it's always interactable */
-            min-width: 200px;
-            min-height: 150px;
-        }
-        .message-box-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 24rem; /* max-w-sm */
-            width: 100%;
-        }
-        .message-box-button {
-            padding: 0.625rem 1.25rem; /* px-5 py-2 */
-            background-color: #2563eb; /* bg-blue-600 */
-            color: white;
-            border-radius: 0.375rem; /* rounded-md */
-            transition-property: background-color;
-            transition-duration: 300ms;
-            transition-timing-function: ease;
-        }
-        .message-box-button:hover {
-            background-color: #1d4ed8; /* hover:bg-blue-700 */
-        }
+        /* Removed .message-box, .message-box-content, .message-box-button styles */
     </style>
 </head>
 <body>
@@ -203,7 +167,7 @@
         // Function to check for win or draw
         function checkGameStatus() {
             let roundWon = false;
-            let winningLine = []; // Store the winning line indices
+            // let winningLine = []; // Removed: Not needed without highlighting
 
             for (let i = 0; i < winningConditions.length; i++) {
                 const winCondition = winningConditions[i];
@@ -216,15 +180,14 @@
                 }
                 if (a === b && b === c) {
                     roundWon = true;
-                    winningLine = winCondition; // Store the winning line
+                    // winningLine = winCondition; // Removed: Not needed without highlighting
                     break;
                 }
             }
 
             if (roundWon) {
                 gameActive = false;
-                // Highlight the winning combination
-                highlightWinningCells(winningLine);
+                // highlightWinningCells(winningLine); // Removed: No highlighting
                 showMessageBox(`Le joueur ${currentPlayer === 'X' ? 'Rouge' : 'Bleu'} a gagné !`);
                 return;
             }
@@ -238,14 +201,14 @@
             }
         }
 
-        // Function to highlight the winning cells
-        function highlightWinningCells(winningLine) {
-            winningLine.forEach(index => {
-                const cell = boardElement.children[index];
-                cell.style.backgroundColor = '#ffeb3b'; // A yellow color for highlighting
-                cell.style.transition = 'background-color 0.5s ease';
-            });
-        }
+        // Function to highlight the winning cells (Removed: No highlighting)
+        // function highlightWinningCells(winningLine) {
+        //     winningLine.forEach(index => {
+        //         const cell = boardElement.children[index];
+        //         cell.style.backgroundColor = '#ffeb3b'; // A yellow color for highlighting
+        //         cell.style.transition = 'background-color 0.5s ease';
+        //     });
+        // }
 
         // Function to switch current player
         function switchPlayer() {
@@ -258,61 +221,31 @@
         // Function to display a custom message box
         function showMessageBox(message) {
             const messageBox = document.createElement('div');
-            messageBox.classList.add('message-box');
+            // Reverted to previous styling for non-draggable message box
+            messageBox.classList.add('fixed', 'inset-0', 'bg-black', 'bg-opacity-50', 'flex', 'items-center', 'justify-center', 'z-50');
             messageBox.innerHTML = `
-                <div class="message-box-content">
+                <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm w-full">
                     <p class="text-xl font-semibold mb-4">${message}</p>
-                    <button id="closeMessageBox" class="message-box-button">Rejouer</button>
+                    <button id="closeMessageBox" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Rejouer</button>
                 </div>
             `;
             document.body.appendChild(messageBox);
 
-            // Make the message box draggable
-            let isDragging = false;
-            let currentX;
-            let currentY;
-            let initialX;
-            let initialY;
-            let xOffset = 0;
-            let yOffset = 0;
-
-            messageBox.addEventListener("mousedown", dragStart);
-            messageBox.addEventListener("mouseup", dragEnd);
-            messageBox.addEventListener("mousemove", drag);
-
-            function dragStart(e) {
-                initialX = e.clientX - xOffset;
-                initialY = e.clientY - yOffset;
-
-                if (e.target === messageBox || e.target === messageBox.querySelector('.message-box-content')) {
-                    isDragging = true;
-                    messageBox.style.cursor = 'grabbing';
-                }
-            }
-
-            function dragEnd(e) {
-                initialX = currentX;
-                initialY = currentY;
-                isDragging = false;
-                messageBox.style.cursor = 'grab';
-            }
-
-            function drag(e) {
-                if (isDragging) {
-                    e.preventDefault(); // Prevent default browser drag behavior (e.g., text selection)
-                    currentX = e.clientX - initialX;
-                    currentY = e.clientY - initialY;
-
-                    xOffset = currentX;
-                    yOffset = currentY;
-
-                    setTranslate(currentX, currentY, messageBox);
-                }
-            }
-
-            function setTranslate(xPos, yPos, el) {
-                el.style.transform = `translate(${xPos}px, ${yPos}px)`;
-            }
+            // Removed draggable logic:
+            // let isDragging = false;
+            // let currentX;
+            // let currentY;
+            // let initialX;
+            // let initialY;
+            // let xOffset = 0;
+            // let yOffset = 0;
+            // messageBox.addEventListener("mousedown", dragStart);
+            // messageBox.addEventListener("mouseup", dragEnd);
+            // messageBox.addEventListener("mousemove", drag);
+            // function dragStart(e) { /* ... */ }
+            // function dragEnd(e) { /* ... */ }
+            // function drag(e) { /* ... */ }
+            // function setTranslate(xPos, yPos, el) { /* ... */ }
 
             document.getElementById('closeMessageBox').addEventListener('click', () => {
                 document.body.removeChild(messageBox);
@@ -436,7 +369,7 @@
             initializeBoard();
             showMessageBox("Mode 'Jouer contre l'ordinateur' activé !");
             // If AI is set to start, make its first move
-            if (currentPlayer === AI_PLAYER) {
+            if (currentPlayer === 'O') { // AI_PLAYER
                 setTimeout(makeAIMove, 500);
             }
         });
