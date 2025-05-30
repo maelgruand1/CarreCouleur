@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu de Morpion</title>
+    <link rel="icon" href="./LogoCarreCouleur.png"> <title>Tic-Tac-Toe Game</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for the game board */
@@ -76,17 +76,17 @@
     </style>
 </head>
 <body>
-    <h1 class="text-4xl font-bold text-white mb-8 rounded-lg p-4 bg-opacity-20 backdrop-filter backdrop-blur-sm">Carre couleur</h1>
+    <h1 class="text-4xl font-bold text-white mb-8 rounded-lg p-4 bg-opacity-20 backdrop-filter backdrop-blur-sm">Colored Square</h1>
 
     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
-        <button id="twoPlayersBtn" class="game-button">Jouer à deux</button>
-        <button id="vsComputerBtn" class="game-button">Jouer contre l'ordinateur</button>
+        <button id="twoPlayersBtn" class="game-button">Two Players</button>
+        <button id="vsComputerBtn" class="game-button">Vs. Computer</button>
     </div>
 
     <div id="gameBoard" class="game-board">
         </div>
 
-    <p id="playerTurn" class="player-turn-text">Tour du joueur : <span id="currentPlayerColor">Rouge</span></p>
+    <p id="playerTurn" class="player-turn-text">Player Turn: <span id="currentPlayerColor">Red</span></p>
 
     <script>
         // Game variables
@@ -113,7 +113,7 @@
             boardState = ['', '', '', '', '', '', '', '', '']; // Reset board state
             gameActive = true;
             currentPlayer = 'X'; // Always start with Player X (human)
-            playerTurnDisplay.textContent = 'Rouge'; // Display initial player color
+            playerTurnDisplay.textContent = 'Red'; // Display initial player color
             playerTurnDisplay.classList.remove('text-red-500', 'text-blue-500'); // Clear previous colors
             playerTurnDisplay.classList.add('text-red-500'); // Default to red for X
 
@@ -188,7 +188,7 @@
             if (roundWon) {
                 gameActive = false;
                 // highlightWinningCells(winningLine); // Removed: No highlighting
-                showMessageBox(`Le joueur ${currentPlayer === 'X' ? 'Rouge' : 'Bleu'} a gagné !`);
+                showMessageBox(`Player ${currentPlayer === 'X' ? 'Red' : 'Blue'} won!`);
                 return;
             }
 
@@ -196,7 +196,7 @@
             let roundDraw = !boardState.includes('');
             if (roundDraw) {
                 gameActive = false;
-                showMessageBox("Match nul !");
+                showMessageBox("It's a Draw!");
                 return;
             }
         }
@@ -213,7 +213,7 @@
         // Function to switch current player
         function switchPlayer() {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            playerTurnDisplay.textContent = currentPlayer === 'X' ? 'Rouge' : 'Bleu';
+            playerTurnDisplay.textContent = currentPlayer === 'X' ? 'Red' : 'Blue';
             playerTurnDisplay.classList.remove('text-red-500', 'text-blue-500'); // Reset colors
             playerTurnDisplay.classList.add(currentPlayer === 'X' ? 'text-red-500' : 'text-blue-500');
         }
@@ -226,7 +226,7 @@
             messageBox.innerHTML = `
                 <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm w-full">
                     <p class="text-xl font-semibold mb-4">${message}</p>
-                    <button id="closeMessageBox" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Rejouer</button>
+                    <button id="closeMessageBox" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Play Again</button>
                 </div>
             `;
             document.body.appendChild(messageBox);
@@ -361,13 +361,13 @@
         twoPlayersBtn.addEventListener('click', () => {
             vsAI = false;
             initializeBoard();
-            showMessageBox("Mode 'Jouer à deux' activé !");
+            showMessageBox("Two Player Mode Activated!");
         });
 
         vsComputerBtn.addEventListener('click', () => {
             vsAI = true;
             initializeBoard();
-            showMessageBox("Mode 'Jouer contre l'ordinateur' activé !");
+            showMessageBox("Vs. Computer Mode Activated!");
             // If AI is set to start, make its first move
             if (currentPlayer === 'O') { // AI_PLAYER
                 setTimeout(makeAIMove, 500);
